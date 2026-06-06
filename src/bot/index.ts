@@ -4,14 +4,15 @@ import { startCommand } from './commands/start.command.js';
 import { textHandler } from './handlers/text.handler.js';
 import { callbackHandler } from './handlers/callback.handler.js';
 import { env } from '../config/env.js';
+import { BotContext } from '../types/context.js';
 
 export function createBot(token: string) {
-  const bot = new Telegraf(token);
+  const bot = new Telegraf<BotContext>(token);
   
   bot.use(sessionMiddleware);
   
   bot.start(startCommand);
-  bot.action(/.*/, callbackHandler);
+  bot.on('callback_query', callbackHandler);
   bot.on('text', textHandler);
   
   return bot;
