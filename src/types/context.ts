@@ -1,4 +1,4 @@
-import { Context, SessionFlavor } from 'telegraf';
+import { Context } from 'telegraf';
 import { BotSessionData, UserProfile } from './session.js';
 
 export interface BotContext extends Context {
@@ -6,4 +6,6 @@ export interface BotContext extends Context {
   user?: UserProfile;
 }
 
-export type BotContextWithSession = BotContext & SessionFlavor<BotSessionData>;
+// SessionFlavor is not exported in current telegraf version;
+// BotContext already includes session, so this alias preserves compatibility.
+export type BotContextWithSession = BotContext;
