@@ -2,7 +2,7 @@ import { Context } from 'telegraf';
 import { BotSessionData, UserProfile } from './session.js';
 
 export interface BotContext extends Context {
-  session?: BotSessionData;
+  session: BotSessionData;
   user?: UserProfile;
 }
 
