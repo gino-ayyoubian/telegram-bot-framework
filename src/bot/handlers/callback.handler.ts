@@ -9,17 +9,27 @@ export async function callbackHandler(ctx: BotContextWithSession) {
   const [group, value] = data.split(':');
   
   if (group === 'menu' && value === 'order') {
-    ctx.session.currentState = 'SERVICE_LIST';
-    await ctx.reply('سرویس انتخاب کنید', serviceMenuKeyboard);
+    ctx.session!.flowName = 'order';
+    ctx.session!.currentState = 'SERVICE_LIST';
+    await ctx.reply('انتخاب سرویس:', serviceMenuKeyboard);
+  } else if (group === 'menu' && value === 'payment') {
+    ctx.session!.flowName = 'payment';
+    ctx.session!.currentState = 'PAYMENT_INIT';
+    await ctx.reply('درگاه پرداخت آماده شد.');
   } else if (group === 'menu' && value === 'support') {
-    ctx.session.currentState = 'SUPPORT_MENU';
-    await ctx.reply('پشتیبانی', mainMenuKeyboard);
+    ctx.session!.flowName = 'support';
+    ctx.session!.currentState = 'SUPPORT_MENU';
+    await ctx.reply('موضوع تیکت.');
+  } else if (group === 'menu' && value === 'profile') {
+    ctx.session!.flowName = 'profile';
+    ctx.session!.currentState = 'PROFILE_VIEW';
+    await ctx.reply('پروفایل شما.');
+  } else if (group === 'menu' && value === 'settings') {
+    ctx.session!.flowName = 'settings';
+    ctx.session!.currentState = 'SETTINGS_MENU';
+    await ctx.reply('تنظیمات.');
   } else if (group === 'nav' && value === 'back') {
-    ctx.session.currentState = 'MAIN_MENU';
-    await ctx.reply('بازگشت', mainMenuKeyboard);
-  } else if (group === 'nav' && value === 'cancel') {
-    ctx.session.currentState = 'MAIN_MENU';
-    ctx.session.context = {};
-    await ctx.reply('لغو شد', mainMenuKeyboard);
+    ctx.session!.currentState = 'MAIN_MENU';
+    await ctx.reply('منوی اصلی:', mainMenuKeyboard);
   }
 }
